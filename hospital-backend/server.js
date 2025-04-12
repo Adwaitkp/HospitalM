@@ -1,0 +1,56 @@
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+require("dotenv").config();
+const passport = require("passport");
+require("./passportConfig");
+const Razorpay = require("razorpay");
+
+// ✅ Initialize Express App
+const app = express();
+
+// ✅ Middleware
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(express.json());
+app.use(passport.initialize());
+
+// ✅ MongoDB Connection
+mongoose
+  .connect("mongodb://127.0.0.1:27017/hospitalDB", {
+    // Removed deprecated options
+  })
+  .then(() => console.log("✅ Connected to MongoDB"))
+  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
+
+// ✅ Routes Import
+const authRoutes = require("./routes/authRoutes");
+const appointmentRoutes = require("./routes/appointmentRoutes");
+const adminlogin = require("./routes/adminlogin");
+const adminappointment = require("./routes/adminappointment");
+const paymentRoutes = require("./routes/paymentRoutes");
+
+// ✅ Use Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/book", appointmentRoutes);
+app.use("/api/admin", adminlogin);
+app.use("/api/admin/appointments", adminappointment);
+app.use("/api/payment", paymentRoutes);
+
+// ✅ Default Route
+app.get("/", (req, res) => res.send("🏥 Hospital Management API Running..."));
+
+// ✅ Start Server
+const PORT = process.env.PORT || 5000;
+const server = app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`Port ${PORT} is already in use. Trying another port...`);
+    setTimeout(() => {
+      server.close();
+      server.listen(0); // 0 means a random available port
+    }, 1000);
+  } else {
+    throw err;
+  }
+});
