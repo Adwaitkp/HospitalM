@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Navbar from "./component/Navbar";
+import NavbarRouter from "./component/Navbarroute";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
+import Prescription from "./component/Prescription";
 import BookAppointment from "./pages/BookAppointment";
 import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
 import AdminLogin from "./pages/Adminlogin";
 import AdminDashboard from "./pages/admindashboard";
+import DoctorLogin from "./pages/doctorlogin"; 
+import DoctorDashboard from "./pages/doctordashboard"; 
 
 // CopilotKit
 import { CopilotKit } from "@copilotkit/react-core";
@@ -38,10 +41,49 @@ const OAuthHandler = ({ setToken }) => {
   return <div className="flex justify-center items-center min-h-screen">Processing authentication...</div>;
 };
 
+const CopilotWrapper = () => {
+  const location = useLocation();
+  const isUserRoute = !location.pathname.startsWith('/admin') && !location.pathname.startsWith('/doctor');
+
+  return (
+    isUserRoute && (
+      <>
+        {/* Fixed Disclaimer at Bottom-Left */}
+        <div style={{
+          position: "fixed",
+          bottom: "30px",
+          right: "90px",
+          background: "#fffbea",
+          color: "#8a6d3b",
+          border: "1px solid #f0ad4e",
+          padding: "10px 14px",
+          borderRadius: "8px",
+          boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+          zIndex: 9999,
+          maxWidth: "300px",
+          fontSize: "13px"
+        }}>
+          Hi, I'm an AI doctor 🙂. But I'm not always accurate. Always consult your doctor ⚠️.
+        </div>
+
+        {/* AI Chat Popup */}
+        <CopilotPopup
+          labels={{
+            title: "Utkarsha, AI DOCTOR",
+            initial: "HI I'M AI DOCTOR, NEED ANY HELP? ASK ME!",
+          }}
+          instructions=" Only medical related questions are allowed. "
+        />
+      </>
+    )
+  );
+};
+
 const App = () => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [adminToken, setAdminToken] = useState(localStorage.getItem("adminToken"));
+  const [doctorToken, setDoctorToken] = useState(localStorage.getItem("doctorToken"));
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -98,48 +140,38 @@ const App = () => {
     return adminToken ? element : <Navigate to="/adminlogin" />;
   };
 
+  const DoctorRoute = ({ element }) => {
+    return localStorage.getItem("doctorToken") ? element : <Navigate to="/doctorlogin" />;
+  };
+
   return (
     <CopilotKit publicApiKey={import.meta.env.VITE_COPILOT_API_KEY}>
       <Router>
-        <Navbar user={user} setUser={setUser} setToken={setToken} adminToken={adminToken} setAdminToken={setAdminToken} />
-
-        {/* ✅ Fixed Disclaimer at Bottom-Left */}
-        <div style={{
-          position: "fixed",
-          bottom: "30px",
-          right: "90px", // shifted just to the left of chat icon
-          background: "#fffbea",
-          color: "#8a6d3b",
-          border: "1px solid #f0ad4e",
-          padding: "10px 14px",
-          borderRadius: "8px",
-          boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-          zIndex: 9999,
-          maxWidth: "300px",
-          fontSize: "13px"
-        }}>
-          Hi, I'm an AI doctor 🙂. But I'm not always accurate. Always consult your doctor ⚠️.
-        </div>
-
-        {/* ✅ AI Chat Popup */}
-        <CopilotPopup
-          labels={{
-            title: "AI DOCTOR",
-            initial: "HI I'M AI DOCTOR, NEED ANY HELP? ASK ME!",
-          }}
-          instructions=" Only medical related questions are allowed. "
+        <NavbarRouter 
+          user={user} 
+          setUser={setUser} 
+          setToken={setToken} 
+          adminToken={adminToken} 
+          setAdminToken={setAdminToken} 
+          doctorToken={doctorToken}
+          setDoctorToken={setDoctorToken}
         />
+
+        <CopilotWrapper />
 
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login setToken={setToken} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<ProtectedRoute element={<Profile user={user} token={token} />} />} />
+          <Route path="/prescription" element={<ProtectedRoute element={<Prescription />} />} />
           <Route path="/book-appointment" element={<ProtectedRoute element={<BookAppointment token={token} user={user} />} />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/adminlogin" element={<AdminLogin setAdminToken={setAdminToken} />} />
           <Route path="/admin-dashboard" element={<AdminRoute element={<AdminDashboard adminToken={adminToken} />} />} />
           <Route path="/oauth/callback" element={<OAuthHandler setToken={setToken} />} />
+          <Route path="/doctorlogin" element={<DoctorLogin setDoctorToken={setDoctorToken} />} />
+          <Route path="/doctor-dashboard" element={<DoctorRoute element={<DoctorDashboard doctorToken={doctorToken} />} />} />
         </Routes>
       </Router>
     </CopilotKit>
