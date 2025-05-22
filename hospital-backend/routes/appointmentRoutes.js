@@ -36,7 +36,7 @@ router.post(
           orderId,
           amount
         },
-        status: "Confirmed"
+        status: "Waiting"
       });
 
       await newAppointment.save();
@@ -117,6 +117,7 @@ router.post(
       // Update the appointment with assigned date and time
       appointment.assignedDate = assignedDate;
       appointment.appointmentTime = appointmentTime;
+      appointment.status = "assigned";
       
       // Save the updated appointment
       const updatedAppointment = await appointment.save();

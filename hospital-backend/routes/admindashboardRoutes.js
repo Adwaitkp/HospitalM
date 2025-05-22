@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const isAdmin = require("../middleware/isadmin");
+const isAdmin = require("../middleware/isadminMiddleware");
 const Appointment = require("../models/Appointment");
 const notificationService = require("../services/notificationService");
 
@@ -76,11 +76,6 @@ router.get("/today", isAdmin, async (req, res) => {
       }
     }).sort({ date: 1 });
     
-    // If dates are stored as strings in "YYYY-MM-DD" format, use this alternative approach:
-    // const todayFormatted = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-    // const appointments = await Appointment.find({
-    //   date: { $regex: todayFormatted }
-    // }).sort({ date: 1 });
     
     console.log(`Found ${appointments.length} appointments for today`);
     res.json(appointments);

@@ -45,6 +45,14 @@ const appointmentSchema = new mongoose.Schema(
       type: String,
       default: null
     },
+    status: {
+      type: String,
+      default: "Waiting",
+    },
+    prescription: {
+      type: String,
+      default: null,
+    },
     paymentDetails: {
       paymentId: { type: String },
       orderId: { type: String },

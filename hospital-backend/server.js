@@ -25,15 +25,19 @@ mongoose
 // ✅ Routes Import
 const authRoutes = require("./routes/authRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
-const adminlogin = require("./routes/adminlogin");
-const adminappointment = require("./routes/adminappointment");
+const adminloginRoutes = require("./routes/adminloginRoutes");
+const doctorloginRoutes = require("./routes/doctorloginRoutes");
+const admindashboardRoutes = require("./routes/admindashboardRoutes");
+const doctordashboardRoutes = require("./routes/doctordashboardRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 
 // ✅ Use Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/book", appointmentRoutes);
-app.use("/api/admin", adminlogin);
-app.use("/api/admin/appointments", adminappointment);
+app.use("/api/admin", adminloginRoutes);
+app.use("/api/doctor", doctorloginRoutes);
+app.use("/api/admin/appointments", admindashboardRoutes);
+app.use("/api/doctor/appointments", doctordashboardRoutes);
 app.use("/api/payment", paymentRoutes);
 
 // ✅ Default Route
