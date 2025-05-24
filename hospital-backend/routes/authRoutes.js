@@ -76,7 +76,7 @@ router.get(
             console.log("Token generated for user:", req.user.email);
 
             // Redirect to frontend with token
-            res.redirect(`http://localhost:5173/oauth/callback?token=${token}`);
+            res.redirect(`https://utkarsha.onrender.com/oauth/callback?token=${token}`);
         } catch (error) {
             console.error("Google OAuth Error:", error);
             res.status(500).json({ message: "Server error" });
