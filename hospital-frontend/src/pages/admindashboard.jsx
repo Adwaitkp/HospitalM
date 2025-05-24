@@ -48,7 +48,7 @@ const AdminDashboard = () => {
           return;
         }
 
-        const res = await axios.get("https://hospitalm-xexh.onrender.com/api/admin/appointments/all", {
+        const res = await axios.get("https://hospitalm-9kap.onrender.com/api/admin/appointments/all", {
           headers: { "x-auth-token": token }
         });
 

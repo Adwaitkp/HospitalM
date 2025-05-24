@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const API_URL = "https://hospitalm-xexh.onrender.com/api";
+const API_URL = "https://hospitalm-9kap.onrender.com/api";
 
 const BookAppointment = ({ token, user }) => {
   const [form, setForm] = useState({ 

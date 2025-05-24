@@ -43,7 +43,7 @@ const DoctorDashboard = () => {
   const fetchDoctorProfile = async () => {
     try {
       const token = localStorage.getItem("doctorToken");
-      const res = await axios.get("https://hospitalm-xexh.onrender.com/api/doctor/profile", {
+      const res = await axios.get("https://hospitalm-9kap.onrender.com/api/doctor/profile", {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -56,7 +56,7 @@ const DoctorDashboard = () => {
   const fetchAssignedAppointments = async () => {
     try {
       const token = localStorage.getItem("doctorToken");
-      const res = await axios.get("https://hospitalm-xexh.onrender.com/api/doctor/appointments/assigned", {
+      const res = await axios.get("https://hospitalm-9kap.onrender.com/api/doctor/appointments/assigned", {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -73,7 +73,7 @@ const DoctorDashboard = () => {
   const fetchTodayAppointments = async () => {
     try {
       const token = localStorage.getItem("doctorToken");
-      const res = await axios.get("https://hospitalm-xexh.onrender.com/api/doctor/appointments/assigned/today", {
+      const res = await axios.get("https://hospitalm-9kap.onrender.com/api/doctor/appointments/assigned/today", {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -88,7 +88,7 @@ const DoctorDashboard = () => {
   const fetchPrescriptionData = async (appointmentId) => {
     try {
       const token = localStorage.getItem("doctorToken");
-      const res = await axios.get(`https://hospitalm-xexh.onrender.com/api/doctor/appointments/${appointmentId}/prescription`, {
+      const res = await axios.get(`https://hospitalm-9kap.onrender.com/api/doctor/appointments/${appointmentId}/prescription`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       return res.data;
@@ -118,7 +118,7 @@ const DoctorDashboard = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem("doctorToken");
-      const res = await axios.get(`https://hospitalm-xexh.onrender.com/doctor/appointments/search?name=${searchQuery}`, {
+      const res = await axios.get(`https://hospitalm-9kap.onrender.com/doctor/appointments/search?name=${searchQuery}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -136,7 +136,7 @@ const DoctorDashboard = () => {
     if (!prescription.trim()) return showNotification("Prescription cannot be empty.", "error");
     try {
       const token = localStorage.getItem("doctorToken");
-      await axios.post(`https://hospitalm-xexh.onrender.com/api/doctor/appointments/prescribe/${selectedAppointmentId}`, {
+      await axios.post(`https://hospitalm-9kap.onrender.com/api/doctor/appointments/prescribe/${selectedAppointmentId}`, {
         prescription
       }, {
         headers: { Authorization: `Bearer ${token}` }
