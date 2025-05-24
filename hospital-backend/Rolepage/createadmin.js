@@ -4,7 +4,7 @@ const Admin = require('../models/Admin'); // Corrected path
 
 const createAdmin = async () => {
     try {
-        await mongoose.connect('mongodb://localhost:27017/hospitalDB');
+        await mongoose.connect('mongodb+srv://adwaitlkshs:dqgMpLOgvYnqvh9X@cluster0.qbv5xha.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
 
         const hashedPassword = await bcrypt.hash('adminpassword', 10);
 
@@ -22,5 +22,4 @@ const createAdmin = async () => {
         mongoose.connection.close();
     }
 };
-
-createAdmin();
+module.exports = createAdmin;
