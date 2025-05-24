@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PrescriptionComponent from "../component/Prescription";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL = "https://hospitalm-xexh.onrender.com/api";
 
 const Profile = ({ user, token }) => {
     const [appointments, setAppointments] = useState([]);
