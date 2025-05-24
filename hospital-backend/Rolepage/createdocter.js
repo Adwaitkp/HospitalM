@@ -5,7 +5,7 @@ const Doctor = require('../models/Doctor');
 const createDoctor = async () => {
     try {
         // Connect without deprecated options
-        await mongoose.connect('mongodb+srv://adwaitlkshs:dqgMpLOgvYnqvh9X@cluster0.qbv5xha.mongodb.net/HospitalM?retryWrites=true&w=majority&appName=Cluster0');
+        await mongoose.connect('mongodb+srv://adwaitlkshs:dqgMpLOgvYnqvh9X@cluster0.qbv5xha.mongodb.net/test?retryWrites=true&w=majority&appName=Cluster0');
         console.log('✅ Connected to MongoDB');
 
         // Create and save
