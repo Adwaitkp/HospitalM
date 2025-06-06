@@ -5,6 +5,7 @@ require("dotenv").config();
 const passport = require("passport");
 require("./passportConfig");
 const Razorpay = require("razorpay");
+const path = require("path"); // ✅ Needed for React routing
 
 // ✅ Initialize Express App
 const app = express();
@@ -16,9 +17,7 @@ app.use(passport.initialize());
 
 // ✅ MongoDB Connection
 mongoose
-  .connect("mongodb+srv://adwaitlkshs:dqgMpLOgvYnqvh9X@cluster0.qbv5xha.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
-    // Removed deprecated options
-  })
+  .connect("mongodb+srv://adwaitlkshs:dqgMpLOgvYnqvh9X@cluster0.qbv5xha.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
   .then(() => console.log("✅ Connected to MongoDB"))
   .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
@@ -40,15 +39,22 @@ app.use("/api/admin/appointments", admindashboardRoutes);
 app.use("/api/doctor/appointments", doctordashboardRoutes);
 app.use("/api/payment", paymentRoutes);
 
-// ✅ Default Route
+// ✅ Serve React Frontend (build it first!)
+app.use(express.static(path.join(__dirname, "../hospital-frontend/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../hospital-frontend/dist", "index.html"));
+});
+
+// ✅ Default Route (optional, can remove if React handles it)
 app.get("/", (req, res) => res.send("🏥 Hospital Management API Running..."));
 
 // ✅ Start Server
 const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 
-server.on('error', (err) => {
-  if (err.code === 'EADDRINUSE') {
+server.on("error", (err) => {
+  if (err.code === "EADDRINUSE") {
     console.error(`Port ${PORT} is already in use. Trying another port...`);
     setTimeout(() => {
       server.close();
