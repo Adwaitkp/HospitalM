@@ -83,7 +83,7 @@ const AdminDashboard = () => {
         const token = localStorage.getItem("adminToken");
         if (!token) return;
 
-        const res = await axios.get("https://hospitalm-xexh.onrender.com/api/admin/appointments/today", {
+        const res = await axios.get("https://hospitalm-9kap.onrender.com/api/admin/appointments/today", {
           headers: { "x-auth-token": token }
         });
 
@@ -107,7 +107,7 @@ const AdminDashboard = () => {
         return;
       }
 
-      const res = await axios.get(`https://hospitalm-xexh.onrender.com/api/admin/appointments/search?name=${searchQuery}`, {
+      const res = await axios.get(`https://hospitalm-9kap.onrender.com/api/admin/appointments/search?name=${searchQuery}`, {
         headers: { "x-auth-token": token }
       });
 
@@ -173,7 +173,7 @@ const AdminDashboard = () => {
       }
 
       const response = await axios.post(
-        `https://hospitalm-xexh.onrender.com/api/admin/appointments/assign/${selectedAppointment._id}`,
+        `https://hospitalm-9kap.onrender.com/api/admin/appointments/assign/${selectedAppointment._id}`,
         { assignedDate: assignDate, appointmentTime: assignTime },
         { headers: { "x-auth-token": token } }
       );
