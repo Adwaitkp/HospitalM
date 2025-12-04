@@ -16,7 +16,7 @@ app.use(passport.initialize());
 
 // ✅ MongoDB Connection
 mongoose
-  .connect("mongodb+srv://adwaitlkshs:dqgMpLOgvYnqvh9X@cluster0.qbv5xha.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
+  .connect("mongodb+srv://adwaitlkshs:dqgMpLOgvYnqvh9X@cluster0.qbv5xha.mongodb.net/?appName=Cluster0", {
     // Removed deprecated options
   })
   .then(() => console.log("✅ Connected to MongoDB"))
