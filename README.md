@@ -5,6 +5,10 @@ This platform enables admins and doctors to manage patient records, appointments
 The app includes secure authentication, Razorpay payment integration, Google OAuth, and a user-friendly UI powered by Tailwind CSS.
 
 🔗 **Live Demo**: [https://utkarsha.onrender.com](https://utkarsha.onrender.com)
+Nurse page - https://utkarsha.onrender.com/adminlogin
+Doctor page - https://utkarsha.onrender.com/doctorlogin
+Nurse Login details = admin@example.com , adminpassword
+Doctor login details = doctor@example.com , doctorpassword
 --
 ## 📁 Project Structure
 
