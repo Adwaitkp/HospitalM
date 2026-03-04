@@ -99,8 +99,6 @@ const Home = () => {
         </div>
       </div>
 
-
-
       {/* Doctors Section */}
       <div className="max-w-4xl mx-auto my-12 px-4">
         <h2 className="text-2xl font-bold text-center mb-8">Our Doctors</h2>

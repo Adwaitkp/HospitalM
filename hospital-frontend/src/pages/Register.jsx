@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const API_URL = "https://hospitalm-9kap.onrender.com/api";
+import { API_URL } from "../config/api";
 
 const Notification = ({ message, type }) => (
   <div

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "../config/api";
 
 const AdminDashboard = () => {
   const [appointments, setAppointments] = useState([]);
@@ -48,7 +49,7 @@ const AdminDashboard = () => {
           return;
         }
 
-        const res = await axios.get("https://hospitalm-9kap.onrender.com/api/admin/appointments/all", {
+        const res = await axios.get(`${API_URL}/admin/appointments/all`, {
           headers: { "x-auth-token": token }
         });
 
@@ -83,7 +84,7 @@ const AdminDashboard = () => {
         const token = localStorage.getItem("adminToken");
         if (!token) return;
 
-        const res = await axios.get("https://hospitalm-9kap.onrender.com/api/admin/appointments/today", {
+        const res = await axios.get(`${API_URL}/admin/appointments/today`, {
           headers: { "x-auth-token": token }
         });
 
@@ -107,7 +108,7 @@ const AdminDashboard = () => {
         return;
       }
 
-      const res = await axios.get(`https://hospitalm-9kap.onrender.com/api/admin/appointments/search?name=${searchQuery}`, {
+      const res = await axios.get(`${API_URL}/admin/appointments/search?name=${searchQuery}`, {
         headers: { "x-auth-token": token }
       });
 
@@ -173,7 +174,7 @@ const AdminDashboard = () => {
       }
 
       const response = await axios.post(
-        `https://hospitalm-9kap.onrender.com/api/admin/appointments/assign/${selectedAppointment._id}`,
+        `${API_URL}/admin/appointments/assign/${selectedAppointment._id}`,
         { assignedDate: assignDate, appointmentTime: assignTime },
         { headers: { "x-auth-token": token } }
       );

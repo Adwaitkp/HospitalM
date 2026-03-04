@@ -17,6 +17,7 @@ app.use(passport.initialize());
 // ✅ MongoDB Connection
 mongoose
   .connect("mongodb+srv://adwaitlkshs:dqgMpLOgvYnqvh9X@cluster0.qbv5xha.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
+    
     // Removed deprecated options
   })
   .then(() => console.log("✅ Connected to MongoDB"))
@@ -30,6 +31,7 @@ const doctorloginRoutes = require("./routes/doctorloginRoutes");
 const admindashboardRoutes = require("./routes/admindashboardRoutes");
 const doctordashboardRoutes = require("./routes/doctordashboardRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
+const aiChatRoutes = require("./routes/aiChatRoutes");
 
 // ✅ Use Routes
 app.use("/api/auth", authRoutes);
@@ -39,6 +41,7 @@ app.use("/api/doctor", doctorloginRoutes);
 app.use("/api/admin/appointments", admindashboardRoutes);
 app.use("/api/doctor/appointments", doctordashboardRoutes);
 app.use("/api/payment", paymentRoutes);
+app.use("/api/ai", aiChatRoutes);
 
 // ✅ Default Route
 app.get("/", (req, res) => res.send("🏥 Hospital Management API Running..."));

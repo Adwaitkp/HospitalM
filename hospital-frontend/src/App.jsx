@@ -12,15 +12,14 @@ import AboutUs from "./pages/AboutUs";
 import AdminLogin from "./pages/Adminlogin";
 import AdminDashboard from "./pages/admindashboard";
 import DoctorLogin from "./pages/doctorlogin"; 
-import DoctorDashboard from "./pages/doctordashboard"; 
+import DoctorDashboard from "./pages/doctordashboard";
+import AppointmentBookingCopilot from "./component/AppointmentBookingCopilot"; 
+import { API_URL } from "./config/api";
 
 // CopilotKit
 import { CopilotKit } from "@copilotkit/react-core";
 import { CopilotPopup } from "@copilotkit/react-ui";
 import "@copilotkit/react-ui/styles.css";
-
-// Environment
-const API_URL = import.meta.env.VITE_API_URL;
 
 const OAuthHandler = ({ setToken }) => {
   const location = useLocation();
@@ -41,13 +40,16 @@ const OAuthHandler = ({ setToken }) => {
   return <div className="flex justify-center items-center min-h-screen">Processing authentication...</div>;
 };
 
-const CopilotWrapper = () => {
+const CopilotWrapper = ({ token, user }) => {
   const location = useLocation();
   const isUserRoute = !location.pathname.startsWith('/admin') && !location.pathname.startsWith('/doctor');
 
   return (
     isUserRoute && (
       <>
+        {/* Appointment Booking Integration */}
+        <AppointmentBookingCopilot token={token} user={user} />
+
         {/* Fixed Disclaimer at Bottom-Left */}
         <div style={{
           position: "fixed",
@@ -63,16 +65,16 @@ const CopilotWrapper = () => {
           maxWidth: "300px",
           fontSize: "13px"
         }}>
-          Hi, I'm an AI doctor 🙂. But I'm not always accurate. Always consult your doctor ⚠️.
+          Hi, I'm an AI assistant 🙂. I can answer medical questions and help you book appointments! Always consult your doctor ⚠️.
         </div>
 
         {/* AI Chat Popup */}
         <CopilotPopup
           labels={{
-            title: "Utkarsha, AI DOCTOR",
-            initial: "HI I'M AI DOCTOR, NEED ANY HELP? ASK ME!",
+            title: "Utkarsha AI Assistant",
+            initial: "Hi! I'm your AI assistant. I can answer medical questions and help you book appointments! How can I help you today?",
           }}
-          instructions=" Only medical related questions are allowed. "
+          instructions="You are a helpful medical assistant for Utkarsha Nursing Home. You can answer medical questions and help book appointments. When a user wants to book an appointment, use the startAppointmentBooking action, then collect information using collectAppointmentInfo, and finally proceed with proceedToPayment when confirmed. Be friendly, helpful, and professional."
         />
       </>
     )
@@ -157,7 +159,7 @@ const App = () => {
           setDoctorToken={setDoctorToken}
         />
 
-        <CopilotWrapper />
+        <CopilotWrapper token={token} user={user} />
 
         <Routes>
           <Route path="/" element={<Home />} />
