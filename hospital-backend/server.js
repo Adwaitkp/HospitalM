@@ -10,8 +10,33 @@ const Razorpay = require("razorpay");
 const app = express();
 
 // ✅ Middleware
-//app.use(cors({ origin: "https://utkarsha.onrender.com", credentials: true }));
-app.use(cors({ origin: "https://localhost:5173", credentials: true }));
+const defaultAllowedOrigins = [
+  "http://localhost:5173",
+  "https://localhost:5173",
+  "https://utkarsha.onrender.com",
+];
+
+const envAllowedOrigins = (process.env.CORS_ORIGINS || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+const allowedOrigins = [...new Set([...defaultAllowedOrigins, ...envAllowedOrigins])];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "x-auth-token"],
+    optionsSuccessStatus: 204,
+  })
+);
 app.use(express.json());
 app.use(passport.initialize());
 

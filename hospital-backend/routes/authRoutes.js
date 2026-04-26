@@ -6,6 +6,11 @@ const User = require("../models/User");
 const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
+const frontendUrl =
+    process.env.FRONTEND_URL ||
+    (process.env.NODE_ENV === "production"
+        ? "https://utkarsha.onrender.com"
+        : "http://localhost:5173");
 
 // Login with Email & Password
 router.post("/login", async (req, res) => {
@@ -76,7 +81,7 @@ router.get(
             console.log("Token generated for user:", req.user.email);
 
             // Redirect to frontend with token
-            res.redirect(`https://utkarsha.onrender.com/oauth/callback?token=${token}`);
+            res.redirect(`${frontendUrl}/oauth/callback?token=${token}`);
         } catch (error) {
             console.error("Google OAuth Error:", error);
             res.status(500).json({ message: "Server error" });

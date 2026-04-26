@@ -1,14 +1,10 @@
-// API Configuration
-// ==========================================
-// Change this URL based on your environment
-// ==========================================
+const isLocalHost =
+   typeof window !== "undefined" &&
+   ["localhost", "127.0.0.1"].includes(window.location.hostname);
 
-// OPTION 1: Manual switching (Recommended for simple setups)
-// Uncomment one of the following lines:
+const fallbackApiUrl = isLocalHost
+   ? "http://localhost:5000/api"
+   : "https://hospitalm-9kap.onrender.com/api";
 
-// For local development:
-// export const API_URL = "http://localhost:5000/api";
-
-// For production:
-   export const API_URL = "https://hospitalm-9kap.onrender.com/api";
+export const API_URL = (import.meta.env.VITE_API_URL || fallbackApiUrl).trim();
 
